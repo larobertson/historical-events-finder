@@ -7,7 +7,7 @@
     "start": "webpack -d --watch",
     "build": "webpack --mode production",
     "server": "nodemon ./server/index.js",
-    "api": "json-server --watch data/db.json",
+    "api": "json-server --watch data/db.json --static /client/public",
     "test": "dev-test"
   },
   "repository": {

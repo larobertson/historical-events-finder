@@ -2,14 +2,14 @@ import React from 'react';
 
 const Result = (props) => {
   return (
-    <div>
-    <div>
+  <div className="list-item">
+    <div className="location">
       {props.item.category2}
     </div>
-    <div>
+    <div className="date">
       {props.item.date}
     </div>
-    <div>
+    <div className="description">
       {props.item.description}
     </div>
   </div>

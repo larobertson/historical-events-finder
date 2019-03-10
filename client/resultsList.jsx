@@ -18,7 +18,6 @@ class ResultsList extends React.Component {
   }
 
   render(){
-    console.log('props:', this.props.list)
     return(
       <div>
         {this.state.list.map((item, id) => 

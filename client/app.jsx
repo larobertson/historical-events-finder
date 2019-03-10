@@ -11,8 +11,28 @@ class App extends React.Component {
     this.state = {
       value: '',
       searchResults: [],
+      page: 0,
+      pageCount: 0,
       renderResults: false
     }
+  }
+
+  getIt () {
+    Axios.get('/events', {
+      params:{
+        q: this.state.value,
+        _page: this.state.page,
+        _limit: 10
+    }})
+    .then((results)=> {
+      let searchResults = results.data
+      let pageCount = Math.ceil(results.headers["x-total-count"]/10)
+      this.setState({
+        searchResults: searchResults,
+        pageCount: pageCount
+      })
+    })
+    .catch((err) => console.log('no good, try again', err))
   }
 
   handleSearch(event) {
@@ -23,16 +43,17 @@ class App extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log('is this the text?', this.state.value);
-    Axios.get(`/search?q=${this.state.value}`)
-    .then((results)=> {
-      let searchResults = results.data
-      console.log('results!', results.data)
-      this.setState({
-        searchResults: searchResults
-      })
+    this.setState({
+      page: 1
     })
-    .catch((err) => console.log('no good, try again', err)) 
+    this.getIt()
+  }
+
+  handlePageClick(page) {
+    let selected = page.selected + 1
+    this.setState({
+      page: selected
+    })
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -40,25 +61,37 @@ class App extends React.Component {
       this.setState({
         renderResults: true
       })
-      console.log('state changed')
-    } 
+    }
+    if (this.state.page !== prevState.page) {
+      this.getIt()
+    }
   }
 
   render() {
     let searchList;
-    if (this.state.renderResults){
+    if (this.state.page){
       searchList =  <ResultsList list={this.state.searchResults}/>;
     }
 
     return (
       <div>
-        <h1>Hello World!</h1>
+        <h1>Search World History</h1>
         <form onSubmit={this.handleSubmit.bind(this)}>
           <input type="text" className="search" id="search-item" placeholder="Search..." value={this.state.value} onChange={this.handleSearch.bind(this)}></input>
           <button type="submit" className="searchBtn">Search</button>
         </form>
         {searchList}
-        <ReactPaginate/>
+        <ReactPaginate
+        previousLabel={'Previous'}
+        nextLabel={'Next'}
+        breakLabel={'...'}
+        pageCount={this.state.pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={this.handlePageClick.bind(this)}
+        containerClassName={'pagination'}
+        subContainerClassName={'pages pagination'}
+        activeClassName={'active'}/>
       </div>
     )
   }
