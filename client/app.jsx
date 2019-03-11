@@ -87,9 +87,11 @@ class App extends React.Component {
             <Button type="submit" variant="outline-light">Search</Button>
           </Form>
         </Navbar>
+
           <div className="search-list">
             {searchList}
           </div>
+          
         <ReactPaginate
         previousLabel={'Previous'}
         nextLabel={'Next'}

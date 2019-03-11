@@ -16,6 +16,9 @@ a:hover {
   color: #f8f9fa;
   padding: 10px;
 }
+.active a {
+  color: #ffc107
+}
 
 li {
   margin-right: 10px;
