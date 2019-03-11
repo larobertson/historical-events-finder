@@ -3,6 +3,11 @@ import ReactDOM from 'react-dom';
 import Axios from 'axios';
 import ReactPaginate from 'react-paginate';
 import ResultsList from './resultsList.jsx';
+import Button from 'react-bootstrap/Button';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import Form from 'react-bootstrap/Form';
+import FormControl from 'react-bootstrap/FormControl'
 
 
 class App extends React.Component {
@@ -75,12 +80,16 @@ class App extends React.Component {
 
     return (
       <div>
-        <h1>Search World History</h1>
-        <form onSubmit={this.handleSubmit.bind(this)}>
-          <input type="text" className="search" id="search-item" placeholder="Search..." value={this.state.value} onChange={this.handleSearch.bind(this)}></input>
-          <button type="submit" className="searchBtn">Search</button>
-        </form>
-        {searchList}
+        <Navbar fixed="top" bg="dark" variant="dark">
+          <Navbar.Brand className="mr-auto">Search World History</Navbar.Brand>
+          <Form inline className="justify-content-end" onSubmit={this.handleSubmit.bind(this)}>
+            <FormControl type="text" className="search" className="mr-sm-2" id="search-item" placeholder="Search..." value={this.state.value} onChange={this.handleSearch.bind(this)} />
+            <Button type="submit" variant="outline-light">Search</Button>
+          </Form>
+        </Navbar>
+          <div className="search-list">
+            {searchList}
+          </div>
         <ReactPaginate
         previousLabel={'Previous'}
         nextLabel={'Next'}

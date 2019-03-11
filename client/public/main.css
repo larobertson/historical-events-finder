@@ -1,0 +1,22 @@
+a {
+  color: #f8f9fa
+}
+
+a:hover {
+  color: #ffc107;
+}
+
+.search-list {
+  margin-top: 70px
+}
+
+.pagination {
+  display: flex;
+  background-color: #343a40;
+  color: #f8f9fa;
+  padding: 10px;
+}
+
+li {
+  margin-right: 10px;
+}
